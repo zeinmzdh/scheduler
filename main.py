@@ -1,16 +1,26 @@
-# This is a sample Python script.
+from task import Task
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    tasks_count = int(input())
+    tasks = []
+    for i in range(tasks_count):
+        n, t, d = input().split()
+        task = Task(n, t, d)
+        tasks.append(task)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+def first_come_first_served(tasks_list):
+    pass
+
+
+def shortest_job_first(tasks_list):
+    pass
+
+
+def round_robin(tasks_list):
+    pass
+
+
+def highest_response_ratio_first(tasks_list):
+    pass
+
