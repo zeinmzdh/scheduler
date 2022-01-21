@@ -25,7 +25,6 @@ def first_come_first_served(tasks_list):
 
 def shortest_job_first(tasks_list):
     tasks_list.sort(key=lambda x: x.duration)
-    print(tasks_list)
     time = 0
     while len(tasks_list) != 0:
         running_task = tasks_list.pop(0)
@@ -45,11 +44,30 @@ def shortest_job_first(tasks_list):
 
         print('t:', time, 'task_completed:', running_task, 'seconds_passed:', running_task.time_completed)
         print('-------------------------------------------------------------')
-    pass
 
 
 def round_robin(tasks_list):
-    pass
+    q = 0.5
+    time = 0
+    while len(tasks_list) != 0:
+        running_task = tasks_list.pop(0)
+        print('t:', time, 'running task:', running_task, 'seconds_passed:', running_task.time_completed,
+              'time_left:', running_task.time_left)
+        print('ready list:', tasks_list)
+        if running_task.time_left >= q:
+            time = time + q
+            running_task.time_left = running_task.time_left - q
+            running_task.time_completed = running_task.time_completed + q
+        else:
+            time = time + running_task.time_left
+            running_task.time_left = running_task.time_left - running_task.time_left
+            running_task.time_completed = running_task.time_completed + running_task.time_left
+        if not running_task.has_time_left():
+            print('-------------------------------------------------------------')
+            print('t:', time, 'task_completed:', running_task, 'seconds_passed:', running_task.time_completed)
+            print('-------------------------------------------------------------')
+        else:
+            tasks_list.append(running_task)
 
 
 def highest_response_ratio_first(tasks_list):
@@ -64,5 +82,5 @@ if __name__ == '__main__':
         task = Task(n, t, d)
         tasks.append(task)
 
-    shortest_job_first(tasks)
+    round_robin(tasks)
 
