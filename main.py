@@ -78,12 +78,12 @@ def highest_response_ratio_next(tasks_list):
         running_task = ready_list.pop(0)
         while running_task.has_time_left():
             ready_list = ready_list + check_for_new_tasks(tasks_list, time)
-            for tsk in ready_list:
-                tsk.update_waiting_time_and_rr_time(time)
-            ready_list.sort(key=lambda x: x.response_ratio)
+            update_ready_list(ready_list, time)
+
             print('t:', time, 'running task:', running_task, 'seconds_passed:', running_task.time_completed,
                   'time_left:', running_task.time_left)
             print('ready list:', ready_list)
+
             if running_task.time_left >= 1:
                 time = time + 1
                 running_task.time_left = running_task.time_left - 1
@@ -94,16 +94,18 @@ def highest_response_ratio_next(tasks_list):
                 running_task.time_completed = running_task.time_completed + running_task.time_left
 
         ready_list = ready_list + check_for_new_tasks(tasks_list, time)
-        for tsk in ready_list:
-            tsk.update_waiting_time_and_rr_time(time)
-        ready_list.sort(key=lambda x: x.response_ratio)
-        # for x in ready_list:
-        #     print(x.name, ": ", x.response_ratio)
-        # print(ready_list)
+        update_ready_list(ready_list, time)
+
         print('-------------------------------------------------------------')
         print('t:', time, 'task_completed:', running_task, 'seconds_passed:', running_task.time_completed)
         print('ready list:', ready_list)
         print('-------------------------------------------------------------')
+
+
+def update_ready_list(ready_list, curr_time):
+    for tsk in ready_list:
+        tsk.update_waiting_time_and_rr_time(curr_time)
+    ready_list.sort(key=lambda x: x.response_ratio, reverse=True)
 
 
 def check_for_new_tasks(tasks_list, curr_time):
@@ -118,9 +120,15 @@ def check_for_new_tasks(tasks_list, curr_time):
 if __name__ == '__main__':
     tasks_count = int(input())
     tasks = []
+
+    # for i in range(tasks_count):
+    #     n, t, d = input().split()
+    #     task = Task(n, t, d, i)
+    #     tasks.append(task)
+
     for i in range(tasks_count):
-        n, t, d = input().split()
-        task = Task(n, t, d, i)
+        n, t, d, a = input().split()
+        task = Task(n, t, d, a)
         tasks.append(task)
 
     highest_response_ratio_next(tasks)

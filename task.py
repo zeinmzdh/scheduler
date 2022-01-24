@@ -6,7 +6,7 @@ class Task:
         self.duration = float(duration)
         self.time_left = float(duration)
         self.time_completed = 0
-        self. arrival_time = arrival_time
+        self. arrival_time = float(arrival_time)
         self.waiting_time = 0
         self.response_ratio = (self.duration + self.waiting_time) / self.duration
 
